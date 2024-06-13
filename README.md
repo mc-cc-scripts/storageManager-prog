@@ -11,3 +11,6 @@ A script to push and pull items from storage. This is based on storage drawers a
 - [3] Transfer Chest (In- and Output)
 - [4] Drawer Controller
 - [5] Drawers
+
+**Note:** You may leave space between Computer, Chest and Drawer Controller but you will need an modem next to each of those and have those modems connected via cables.
+You may also omit the modems entirely and have the Computer in between the Chest and the Drawer Controller.
