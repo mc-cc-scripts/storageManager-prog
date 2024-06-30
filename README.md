@@ -29,7 +29,7 @@ local message = {
 }
 ```
 
-Respond example:
+Response example:
 ```lua
 local message = {
     ["success"] = true, -- returns if the call was successful or not
@@ -54,7 +54,7 @@ local message = {
 }
 ```
 
-Respond example:
+Response example:
 ```lua
 local message = {
     ["success"] = true -- returns if the call was successful or not
@@ -74,7 +74,7 @@ local message = {
 }
 ```
 
-Respond example:
+Response example:
 ```lua
 local message = {
     ["success"] = true -- returns if the call was successful or not
