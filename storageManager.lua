@@ -1,4 +1,5 @@
 local storageManager = {}
+local args = {...}
 
 ---@param peripherals table { alias: peripheralName }
 function storageManager:init()
@@ -7,6 +8,11 @@ function storageManager:init()
     self.peripherals = {}
     for i=1, #peripherals do
         self.peripherals[peripherals[i]] = peripheral.wrap(peripherals[i])
+    end
+
+    -- Create a startup file for the program, wont override existing file
+    if args[1] == "startup" then
+        self:addToStartup()
     end
 
     -- Map of items
@@ -74,7 +80,14 @@ function storageManager:search(name)
 end
 
 function storageManager:addToStartup()
-    --@TODO: add script to startup
+    local startupPath = "./startup.lua"
+    if not fs.exists(startupPath) then
+        local file = fs.open(startupPath, "w")
+        file.write("shell.run(\"storageManager.lua\")")
+        file.close()
+    else
+        print("startup.lua already exists.")
+    end
 end
 
 storageManager:init()
