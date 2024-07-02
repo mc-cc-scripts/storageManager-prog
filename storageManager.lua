@@ -115,6 +115,13 @@ function storageManager:run()
                 ["success"] = success,
                 ["items"] = items
             })
+        elseif command == "peripherals" then
+            success = true
+
+            response = textutils.serialiseJSON({
+                ["success"] = success,
+                ["peripherals"] = peripheral.getNames()
+            })
         elseif command == "put" then
             local from = messageObj["from"]
             local to = messageObj["to"]

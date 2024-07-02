@@ -20,6 +20,25 @@ _Note: Currently errors are not handled properly and the `success` field in the 
 
 Below you can find the available commands and an example for their requests and responses.
 
+## Peripherals
+Request example:
+```lua
+local message = {
+    ["command"] = "peripherals",
+}
+```
+
+Response example:
+```lua
+local message = {
+    ["success"] = true, -- returns if the call was successful or not
+    ["peripherals"] = {
+        peripheral <string>,
+        -- ...
+    }
+}
+```
+
 ## List
 Request example:
 ```lua
