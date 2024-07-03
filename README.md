@@ -54,7 +54,7 @@ local message = {
     ["success"] = true, -- returns if the call was successful or not
     ["items"] = {
         [itemName <string>] = {
-            [slot <number>] = itemCount <number>
+            [slot <string>] = itemCount <number> -- note: slot is a number but returns as string so it does not mess with the table
         },
         -- ...
     }

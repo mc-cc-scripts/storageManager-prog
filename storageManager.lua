@@ -51,7 +51,7 @@ function storageManager:fetchItems(peripheral)
     local items = {}
     for slot, item in pairs(self.peripherals[peripheral].list()) do
         items[item.name] = {
-            [slot] = item.count,
+            [tostring(slot)] = item.count,
         }
     end
 
