@@ -27,6 +27,7 @@ if rednet.isOpen() then
     print (textutils.serialiseJSON(msgObject['peripherals']))
     for i=1, #peripherals do
         print(peripherals[i])
+        -- Note: In my test world I've used a drawer controller and a chest connected to the server via wired modems.
         if string.find(peripherals[i], "controller") then
             controller = peripherals[i]
         elseif string.find(peripherals[i], "chest") then
