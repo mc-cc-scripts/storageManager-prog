@@ -11,20 +11,20 @@ if rednet.isOpen() then
         ["command"] = "peripherals"
     }
 
-    rednet.send(host, textutils.serialiseJSON(message), protocol)
+    rednet.send(host, message, protocol)
 
-    local msgObject
+    local msg
     while true do
-        local id, msg, prot = rednet.receive(protocol)
+        local id, prot
+        id, msg, prot = rednet.receive(protocol)
         print(id, msg, prot)
-        msgObject = textutils.unserialiseJSON(msg)
         break
     end
 
     local controller
     local chest
-    local peripherals = msgObject['peripherals']
-    print (textutils.serialiseJSON(msgObject['peripherals']))
+    local peripherals = msg['peripherals']
+    print(msg['peripherals'])
     for i=1, #peripherals do
         print(peripherals[i])
         -- Note: In my test world I've used a drawer controller and a chest connected to the server via wired modems.
@@ -41,13 +41,13 @@ if rednet.isOpen() then
         ["peripheral"] = controller
     }
 
-    rednet.send(host, textutils.serialiseJSON(message), protocol)
+    rednet.send(host, message, protocol)
 
-    msgObject = nil
+    msg = nil
     while true do
-        local id, msg, prot = rednet.receive(protocol)
+        local id, prot
+        id, msg, prot = rednet.receive(protocol)
         print(id, msg, prot)
-        msgObject = textutils.unserialiseJSON(msg)
         break
     end
 

@@ -103,59 +103,58 @@ function storageManager:run()
         local deviceID
         local message
         deviceID, message, _ = rednet.receive(protocol)
-        local messageObj = textutils.unserialiseJSON(message)
-        local command = messageObj["command"]
-        local response = ""
+        local command = message["command"]
+        local response = {}
         local success = false
         
         if command == "list" then
-            local peripheral = messageObj["peripheral"]
+            local peripheral = message["peripheral"]
             local items = nil
             if peripheral then
                 items = self:fetchItems(peripheral)
             end
             if items then success = true end
 
-            response = textutils.serialiseJSON({
+            response = {
                 ["success"] = success,
                 ["items"] = items
-            })
+            }
         elseif command == "peripherals" then
             success = true
 
-            response = textutils.serialiseJSON({
+            response = {
                 ["success"] = success,
                 ["peripherals"] = peripheral.getNames()
-            })
+            }
         elseif command == "put" then
-            local from = messageObj["from"]
-            local to = messageObj["to"]
-            local slot = messageObj["slot"]
-            local count = messageObj["count"]
+            local from = message["from"]
+            local to = message["to"]
+            local slot = message["slot"]
+            local count = message["count"]
             
             if from and to and slot then
                 self:pushItem(from, to, slot, count)
                 success = true
             end
 
-            response = textutils.serialiseJSON({
+            response = {
                 ["success"] = success
-            })
+            }
         elseif command == "extract" then
-            local from = messageObj["from"]
-            local to = messageObj["to"]
-            local fromSlot = messageObj["fromSlot"]
-            local count = messageObj["count"]
-            local toSlot = messageObj["toSlot"]
+            local from = message["from"]
+            local to = message["to"]
+            local fromSlot = message["fromSlot"]
+            local count = message["count"]
+            local toSlot = message["toSlot"]
 
             if from and to and fromSlot and count then
                 self:pullItem(from, to, fromSlot, count, toSlot)
                 success = true
             end
             
-            response = textutils.serialiseJSON({
+            response = {
                 ["success"] = success
-            })
+            }
         end
 
         rednet.send(deviceID, response, protocol)
