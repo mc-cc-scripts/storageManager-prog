@@ -36,7 +36,12 @@ function storageManager:init()
             self.peripherals[peripherals[i]] = peripheral.wrap(peripherals[i])
         end
 
-        self:run()
+        peripheral.find("modem", rednet.open)
+        if rednet.isOpen() then
+            self:run()
+        else
+            print("Failed to start server. No open modem.")
+        end
     end
 end
 
