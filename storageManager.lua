@@ -65,7 +65,7 @@ end
 ---@param toSlot number slot to put item to
 function storageManager:pullItem(from, to, fromSlot, count, toSlot)
     count = count or 1
-    self.peripherals[to].pullItems(self.peripherals[from].name, fromSlot, count, toSlot)
+    self.peripherals[to].pullItems(from, fromSlot, count, toSlot)
 end
 
 ---@param from string peripheral name
@@ -75,10 +75,10 @@ end
 function storageManager:pushItem(from, to, slot, count)
     if not slot then
         for _slot, item in pairs(self.transfer_chest.list()) do
-            self.peripherals[from].pushItems(self.peripherals[to].name, _slot, item.count)
+            self.peripherals[from].pushItems(to, _slot, item.count)
         end
     else
-        self.peripherals[from].pushItems(self.peripherals[to].name, slot, count)
+        self.peripherals[from].pushItems(to, slot, count)
     end
 end
 

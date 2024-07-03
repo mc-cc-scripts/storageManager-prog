@@ -35,6 +35,8 @@ if rednet.isOpen() then
         end
     end
 
+    print(controller, chest)
+
     -- list all items in controller
     message = {
         ["command"] = "list",
@@ -43,11 +45,26 @@ if rednet.isOpen() then
 
     rednet.send(host, message, protocol)
 
+    -- move items from controller to chest (extract test)
     msg = nil
     while true do
         local id, prot
         id, msg, prot = rednet.receive(protocol)
         print(id, msg, prot)
+        for item, slots in pairs(msg["items"]) do
+            for slot, count in pairs(slots) do
+                message = {
+                    ["command"] = "extract",
+                    ["from"] = controller,
+                    ["to"] = chest,
+                    ["fromSlot"] = tonumber(slot),
+                    ["count"] = tonumber(count),
+                    ["toSlot"] = nil
+                }
+                rednet.send(host, message, protocol)
+                sleep(1)
+            end
+        end
         break
     end
 
