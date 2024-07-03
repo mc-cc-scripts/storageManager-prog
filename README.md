@@ -13,7 +13,7 @@ A script to push and pull items from storage. This is based on storage drawers a
 - [5] Drawers
 
 **Note:** You may leave space between Computer, Chest and Drawer Controller but you will need an modem next to each of those and have those modems connected via cables.
-You may also omit the modems entirely and have the Computer in between the Chest and the Drawer Controller.
+You may also omit the modems entirely and have the Computer in between the Chest and the Drawer Controller. I would recommend to place the modem, since that will add the names of the connected peripherals to the output when using the `peripherals` command.
 
 # API
 _Note: Currently errors are not handled properly and the `success` field in the response may not always be accurate._
