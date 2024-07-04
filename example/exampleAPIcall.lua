@@ -68,6 +68,27 @@ if rednet.isOpen() then
         break
     end
 
+    -- put test
+    message = {
+        ["command"] = "put",
+        ["from"] = chest,
+        ["to"] = controller,
+        ["fromSlot"] = 1,
+        ["count"] = 1,
+        ["toSlot"] = nil,
+    }
+
+    rednet.send(host, message, protocol)
+
+    msg = nil
+    while true do
+        local id, prot
+        id, msg, prot = rednet.receive(protocol)
+        print(id, textutils.serialiseJSON(msg), prot)
+        break
+    end
+
+
 else
     print("No open modem")
 end

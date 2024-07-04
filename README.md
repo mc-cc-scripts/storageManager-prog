@@ -54,7 +54,8 @@ local message = {
     ["success"] = true, -- returns if the call was successful or not
     ["items"] = {
         [itemName <string>] = {
-            [slot <string>] = itemCount <number> -- note: slot is a number but returns as string so it does not mess with the table
+            -- note: slot is a number but returns as string so it does not mess with the table
+            [slot <string>] = itemCount <number>
         },
         -- ...
     }
@@ -68,8 +69,9 @@ local message = {
     ["command"] = "put",
     ["from"] = <string>, -- peripheral name (e.g.: `minecraft:chest_2`)
     ["to"] = <string>, -- peripheral name (e.g.: `minecraft:chest_2`)
-    ["slot"] = <number>, -- target slot, will use any slot if not specified
+    ["fromSlot"] = <number>,
     ["count"] = <number>, -- defaults to 1
+    ["toSlot"] = <number>, -- toSlot, will use any slot if not specified
 }
 ```
 
@@ -87,7 +89,7 @@ local message = {
     ["command"] = "extract",
     ["from"] = <string>, -- peripheral name (e.g.: `minecraft:chest_2`)
     ["to"] = <string>, -- peripheral name (e.g.: `minecraft:chest_2`)
-    ["fromSlot"] = <number>, -- fromSlot
+    ["fromSlot"] = <number>,
     ["count"] = <number>, -- defaults to 1
     ["toSlot"] = <number>, -- toSlot, will use any slot if not specified
 }

@@ -70,16 +70,12 @@ end
 
 ---@param from string peripheral name
 ---@param to string peripheral name
----@param slot number optional
+---@param fromSlot number
 ---@param count number optional
-function storageManager:pushItem(from, to, slot, count)
-    if not slot then
-        for _slot, item in pairs(self.transfer_chest.list()) do
-            self.peripherals[from].pushItems(to, _slot, item.count)
-        end
-    else
-        self.peripherals[from].pushItems(to, slot, count)
-    end
+---@param toSlot number optional
+function storageManager:pushItem(from, to, fromSlot, count, toSlot)
+    count = count or 1
+    self.peripherals[from].pushItems(to, fromSlot, count, toSlot)
 end
 
 function storageManager:addToStartup()
@@ -129,11 +125,12 @@ function storageManager:run()
         elseif command == "put" then
             local from = message["from"]
             local to = message["to"]
-            local slot = message["slot"]
+            local fromSlot = message["fromSlot"]
             local count = message["count"]
+            local toSlot = message["toSlot"]
             
-            if from and to and slot then
-                self:pushItem(from, to, slot, count)
+            if from and to and fromSlot then
+                self:pushItem(from, to, fromSlot, count, toSlot)
                 success = true
             end
 
