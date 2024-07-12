@@ -99,5 +99,35 @@ local message = {
 }
 ```
 
+## Pack
+Used to pack multiple commands together in one request.
+
+Request example:
+```lua
+local message = {
+    ["command"] = "pack",
+    ["pack"] = {
+        -- id (will be used in the response) and the request you want to pack
+        [id <string>] = request <table>,
+        -- ...
+    }
+}
+```
+
+Response example:
+```lua
+local message = {
+    ["success"] = true, -- returns if the call was successful or not
+    ["pack"] = {
+        {
+            ["id"] = <string>,
+            ["command"] = <string>,
+            ["response"] = response <table>
+        },
+        -- ...
+    }
+}
+```
+
 # Example
 For a simple example, take a look at `example/exampleAPIcall.lua`.

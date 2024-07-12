@@ -89,6 +89,84 @@ function storageManager:addToStartup()
     end
 end
 
+---@param message table
+---@return table
+function storageManager:handleCommand(message)
+    local command = message["command"]
+    local success = false
+    local response = {}
+
+    if command == "list" then
+        local peripheral = message["peripheral"]
+        local items = nil
+        if peripheral then
+            items = self:fetchItems(peripheral)
+        end
+        if items then success = true end
+
+        response = {
+            ["success"] = success,
+            ["items"] = items
+        }
+    elseif command == "peripherals" then
+        success = true
+
+        response = {
+            ["success"] = success,
+            ["peripherals"] = peripheral.getNames()
+        }
+    elseif command == "put" then
+        local from = message["from"]
+        local to = message["to"]
+        local fromSlot = message["fromSlot"]
+        local count = message["count"]
+        local toSlot = message["toSlot"]
+        
+        if from and to and fromSlot then
+            self:pushItem(from, to, fromSlot, count, toSlot)
+            success = true
+        end
+
+        response = {
+            ["success"] = success
+        }
+    elseif command == "extract" then
+        local from = message["from"]
+        local to = message["to"]
+        local fromSlot = message["fromSlot"]
+        local count = message["count"]
+        local toSlot = message["toSlot"]
+
+        if from and to and fromSlot and count then
+            self:pullItem(from, to, fromSlot, count, toSlot)
+            success = true
+        end
+        
+        response = {
+            ["success"] = success
+        }
+    elseif command == "pack" then
+        success = true
+        local mPack = message["pack"]
+        local pack = {}
+
+        for id, _message in pairs(mPack) do
+            table.insert(pack, {
+                ["id"] = id,
+                ["command"] = _message["command"],
+                ["response"] = self:handleCommand(_message)
+            })
+        end
+
+        response = {
+            ["success"] = success,
+            ["pack"] = pack
+        }
+    end
+
+    return response
+end
+
 function storageManager:run()
     local protocol = Config:get('protocolPrefix') .. Config:get('protocol')
     local name = Config:get('serverName')
@@ -99,60 +177,8 @@ function storageManager:run()
         local deviceID
         local message
         deviceID, message, _ = rednet.receive(protocol)
-        local command = message["command"]
-        local response = {}
-        local success = false
         
-        if command == "list" then
-            local peripheral = message["peripheral"]
-            local items = nil
-            if peripheral then
-                items = self:fetchItems(peripheral)
-            end
-            if items then success = true end
-
-            response = {
-                ["success"] = success,
-                ["items"] = items
-            }
-        elseif command == "peripherals" then
-            success = true
-
-            response = {
-                ["success"] = success,
-                ["peripherals"] = peripheral.getNames()
-            }
-        elseif command == "put" then
-            local from = message["from"]
-            local to = message["to"]
-            local fromSlot = message["fromSlot"]
-            local count = message["count"]
-            local toSlot = message["toSlot"]
-            
-            if from and to and fromSlot then
-                self:pushItem(from, to, fromSlot, count, toSlot)
-                success = true
-            end
-
-            response = {
-                ["success"] = success
-            }
-        elseif command == "extract" then
-            local from = message["from"]
-            local to = message["to"]
-            local fromSlot = message["fromSlot"]
-            local count = message["count"]
-            local toSlot = message["toSlot"]
-
-            if from and to and fromSlot and count then
-                self:pullItem(from, to, fromSlot, count, toSlot)
-                success = true
-            end
-            
-            response = {
-                ["success"] = success
-            }
-        end
+        local response = self:handleCommand(message)
 
         rednet.send(deviceID, response, protocol)
     end

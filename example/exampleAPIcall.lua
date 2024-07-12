@@ -88,6 +88,58 @@ if rednet.isOpen() then
         break
     end
 
+    -- pack example
+    local m1 = {
+        ["command"] = "list",
+        ["peripheral"] = controller
+    }
+
+    local m2 = {
+        ["command"] = "put",
+        ["from"] = chest,
+        ["to"] = controller,
+        ["fromSlot"] = 1,
+        ["count"] = 2,
+        ["toSlot"] = 1,
+    }
+
+    local m3 = {
+        ["command"] = "extract",
+        ["from"] = controller,
+        ["to"] = chest,
+        ["fromSlot"] = 1,
+        ["count"] = 3,
+        ["toSlot"] = nil
+    }
+
+    local m4 = {
+        ["command"] = "put",
+        ["from"] = chest,
+        ["to"] = controller,
+        ["fromSlot"] = 2,
+        ["count"] = 4,
+        ["toSlot"] = nil,
+    }
+
+    message = {
+        ["command"] = "pack",
+        ["pack"] = {
+            ["1"] = m1,
+            ["2"] = m2,
+            ["3"] = m3,
+            ["4"] = m4
+        }
+    }
+    rednet.send(host, message, protocol)
+
+    msg = nil
+    while true do
+        local id, prot
+        id, msg, prot = rednet.receive(protocol)
+        print(id, textutils.serialiseJSON(msg), prot)
+        -- break
+    end
+
 
 else
     print("No open modem")
