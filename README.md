@@ -15,6 +15,15 @@ You may also omit the modems entirely and have the Computer in between the Chest
 # API
 _Note: Currently errors are not handled properly and the `success` field in the response may not always be accurate._
 
+Send requests with rednet:
+```lua
+local host = <string> -- default: storageManager
+local protocol = <string> -- default: storageManager#00
+local message = <string> -- see below
+rednet.send(host, message, protocol)
+```
+_Note: You will have to [connect to a modem](https://tweaked.cc/module/rednet.html#v:open) first._
+
 Below you can find the available commands and an example for their requests and responses.
 
 ## Peripherals
