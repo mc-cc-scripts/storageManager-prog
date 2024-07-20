@@ -50,9 +50,15 @@ end
 function storageManager:fetchItems(peripheral)
     local items = {}
     for slot, item in pairs(self.peripherals[peripheral].list()) do
-        items[item.name] = {
-            [tostring(slot)] = item.count,
-        }
+        if items[item.name] then
+            table.insert(items[item.name], {
+                [tostring(slot)] = item.count,
+            })
+        else
+            items[item.name] = {
+                [tostring(slot)] = item.count,
+            }
+        end
     end
 
     return items
