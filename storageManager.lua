@@ -65,7 +65,7 @@ end
 ---@param toSlot number slot to put item to
 function storageManager:pullItem(from, to, fromSlot, count, toSlot)
     count = count or 1
-    self.peripherals[to].pullItems(from, fromSlot, count, toSlot)
+    self.peripherals[to].pullItems(from, tonumber(fromSlot), count, tonumber(toSlot))
 end
 
 ---@param from string peripheral name
@@ -75,7 +75,7 @@ end
 ---@param toSlot number optional
 function storageManager:pushItem(from, to, fromSlot, count, toSlot)
     count = count or 1
-    self.peripherals[from].pushItems(to, fromSlot, count, toSlot)
+    self.peripherals[from].pushItems(to, tonumber(fromSlot), count, tonumber(toSlot))
 end
 
 function storageManager:addToStartup()
