@@ -4,6 +4,7 @@ A script to push and pull items from storage. This is based on storage drawers a
 # Setup
 ![Setup](setup/storageManager.jpg)
 - [1] Computer
+- [1.5] A Wireless Modem has to be connected to the Computer
 - [2] Wired Modem (Right-click to make sure everything is connected!)
 - [3] Transfer Chest (In- and Output)
 - [4] Drawer Controller
