@@ -22,6 +22,13 @@ local protocol = <string> -- default: storageManager#00
 local message = <string> -- see below
 rednet.send(host, message, protocol)
 ```
+
+Get the response like this:
+```lua
+local protocol = <string> -- default: storageManager#00
+local timeout = <number> -- will timeout after n-seconds
+local id, message = rednet.receive(protocol, timeout)
+```
 _Note: You will have to [connect to a modem](https://tweaked.cc/module/rednet.html#v:open) first._
 
 Below you can find the available commands and an example for their requests and responses.
